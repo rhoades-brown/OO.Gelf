@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="97948f6d-bfb4-44e7-84dd-906408b32996">
+  <descriptionCdata><![CDATA[97948f6d-bfb4-44e7-84dd-906408b32996.122c7f7f-6634-453a-bb74-1a9baa34d436.prompt=Include JAVA stats in the log message?
+97948f6d-bfb4-44e7-84dd-906408b32996.29224a7c-d873-41b0-bbef-0197e215180c.prompt=Choose the priority of this message
+97948f6d-bfb4-44e7-84dd-906408b32996.44779c39-4b4a-4990-a2b4-d5265805e485.prompt=Please enter the short message here.
+97948f6d-bfb4-44e7-84dd-906408b32996.87cce3ee-1ee2-4b0f-b27e-8b773f7b82c5.prompt=Enter the GrayLog server name
+97948f6d-bfb4-44e7-84dd-906408b32996.description=Publishes a Gelf message via UDP.
+97948f6d-bfb4-44e7-84dd-906408b32996.fb835bde-317c-49f8-972f-320e99a68702.prompt=Please enter more detailed description of the issue here
+]]></descriptionCdata>
+  <annotation>97948f6d-bfb4-44e7-84dd-906408b32996.description</annotation>
+  <name>Send Gelf Message</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="44779c39-4b4a-4990-a2b4-d5265805e485">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>message</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt>97948f6d-bfb4-44e7-84dd-906408b32996.44779c39-4b4a-4990-a2b4-d5265805e485.prompt</prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="fb835bde-317c-49f8-972f-320e99a68702">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>detail</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt>97948f6d-bfb4-44e7-84dd-906408b32996.fb835bde-317c-49f8-972f-320e99a68702.prompt</prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="87cce3ee-1ee2-4b0f-b27e-8b773f7b82c5">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>grayLogHost</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt>97948f6d-bfb4-44e7-84dd-906408b32996.87cce3ee-1ee2-4b0f-b27e-8b773f7b82c5.prompt</prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <staticBinding id="d04fcf54-31cb-42c6-8230-d57b87c44e38">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>grayLogPort</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>12201</value>
+      <record>false</record>
+    </staticBinding>
+    <userInputBinding id="122c7f7f-6634-453a-bb74-1a9baa34d436">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>includeStats</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt>97948f6d-bfb4-44e7-84dd-906408b32996.122c7f7f-6634-453a-bb74-1a9baa34d436.prompt</prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <link>
+        <refId>96a1ed25-cdc9-4ff6-8fba-e9c044c5ca53</refId>
+        <refName>Boolean - False Default</refName>
+      </link>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="29224a7c-d873-41b0-bbef-0197e215180c">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>priority</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <validationFormat>
+        <refId>d2c50250-9475-4b1e-9c8e-9ec4ef2ecaba</refId>
+        <refName>Gelf Priority</refName>
+      </validationFormat>
+      <prompt>97948f6d-bfb4-44e7-84dd-906408b32996.29224a7c-d873-41b0-bbef-0197e215180c.prompt</prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <link>
+        <refId>cdacde8b-c405-4261-94d2-2695da7e5567</refId>
+        <refName>Gelf Priority Levels</refName>
+      </link>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <staticBinding id="967e39ea-178c-456c-b506-705fd7c2ddb0">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>additionalProperties</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="04afd29f-4ed9-4eec-955f-91d94b44daec">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>objectDetails</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="b475af4c-a0c3-42c4-9fd5-cd8da9f9ea25">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>logAbove</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value>INFO</value>
+      <record>false</record>
+      <validationFormat>
+        <refId>d2c50250-9475-4b1e-9c8e-9ec4ef2ecaba</refId>
+        <refName>Gelf Priority</refName>
+      </validationFormat>
+    </staticBinding>
+  </inputs>
+  <possibleResponses>
+    <opResponse id="6863eba9-7044-4f55-b4fe-f977252786f7">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>true</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules>
+        <expression id="c131f3c6-c2e6-4d82-8b62-a3376c0465e2">
+          <annotation></annotation>
+          <name>returnResult</name>
+          <fieldName>returnResult</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <containsEvaluator id="80043a06-652d-40a5-a46f-f9a2e7b33207">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>0</text>
+            <ignoreCase>true</ignoreCase>
+            <matchType>EXACT_MATCH</matchType>
+          </containsEvaluator>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+    <opResponse id="8d6a4a05-d8e0-424c-bfdb-1de965f080cc">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>false</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules>
+        <expression id="49532e06-f61a-4ddd-ab24-678a00f21753">
+          <annotation></annotation>
+          <name>returnResult</name>
+          <fieldName>returnResult</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <containsEvaluator id="5ff6173e-2200-46e7-bc42-1df69f721c63">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>0</text>
+            <ignoreCase>true</ignoreCase>
+            <matchType>EXACT_MATCH</matchType>
+          </containsEvaluator>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <iconSpec id="c0b1e8bd-064e-4561-bc01-afa6e29aac54">
+    <baseIcon>index.png</baseIcon>
+    <basePath>/Others/</basePath>
+    <readOnly>false</readOnly>
+    <layers>
+      <iconSpec id="8fde92f1-a7af-40b1-abfa-368d6fcd1422">
+        <baseIcon>add.png</baseIcon>
+        <basePath>/Annotations/</basePath>
+        <readOnly>false</readOnly>
+        <layers/>
+      </iconSpec>
+    </layers>
+  </iconSpec>
+  <plugin>
+    <groupId>com.rhoadesbrown.gelfOO</groupId>
+    <artifactId>GelfOO-plugin</artifactId>
+    <version>1.0.0</version>
+    <actionName>Send Gelf Message</actionName>
+  </plugin>
+  <fieldValues/>
+</operation>

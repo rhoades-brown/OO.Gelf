@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selectionList id="cdacde8b-c405-4261-94d2-2695da7e5567">
+  <descriptionCdata><![CDATA[]]></descriptionCdata>
+  <annotation></annotation>
+  <name>Gelf Priority Levels</name>
+  <storage>
+    <string>EMERGENCY</string>
+    <string>ALERT</string>
+    <string>CRITICAL</string>
+    <string>ERROR</string>
+    <string>WARNING</string>
+    <string>NOTICE</string>
+    <string>INFO</string>
+    <string>DEBUG</string>
+  </storage>
+</selectionList>

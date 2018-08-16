@@ -1,25 +1,78 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hp.oo.sdk.content.annotations.Action;
 import com.hp.oo.sdk.content.annotations.Output;
 import com.hp.oo.sdk.content.annotations.Param;
 import com.hp.oo.sdk.content.annotations.Response;
 import com.hp.oo.sdk.content.constants.OutputNames;
 import com.hp.oo.sdk.content.constants.ResponseNames;
-import com.hp.oo.sdk.content.plugin.ActionMetadata.MatchType;
 import com.hp.oo.sdk.content.plugin.ActionMetadata.ResponseType;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-
-import org.graylog2.gelfclient.GelfConfiguration;
-import org.graylog2.gelfclient.GelfMessage;
-import org.graylog2.gelfclient.GelfMessageBuilder;
-import org.graylog2.gelfclient.GelfMessageLevel;
-import org.graylog2.gelfclient.GelfTransports;
+import org.graylog2.gelfclient.*;
 import org.graylog2.gelfclient.transport.GelfTransport;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryPoolMXBean;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
 public class GelfMessages {
+
+
+    private String GetOOStats() throws Exception {
+        List<OOResource> ooResources = new ArrayList<OOResource>();
+
+        ooResources.add(new OOResource()); // gets heap.
+        for (MemoryPoolMXBean memoryPoolMXBean : ManagementFactory.getMemoryPoolMXBeans()) {
+            ooResources.add(new OOResource(memoryPoolMXBean));
+        }
+
+        final ObjectMapper mapper = new ObjectMapper();
+
+        return mapper.writeValueAsString(ooResources);
+    }
+
+    private GelfMessageLevel GetDebugLevel(String level, GelfMessageLevel defaultLevel){
+
+        if (level.isEmpty()) {
+            return  defaultLevel;
+        } else {
+            try {
+                return  GelfMessageLevel.fromNumericLevel(
+                        Integer.parseInt(level)
+                );
+            } catch (Exception e) {
+                return GelfMessageLevel.valueOf(
+                        level.toUpperCase()
+                );
+            }
+        }
+
+    }
+
+    private Map<String, Object> ProcessKeyValuePair(String strings, Boolean addUnderscore) {
+        Map<String,Object> result = new HashMap<>();
+
+        for (String line : strings.split("\\r?\\n")) {
+            Pattern compile = Pattern.compile("^(?<variable>\\w+)=(?<value>.*)$");
+            Matcher matcher = compile.matcher(line);
+            matcher.find();
+            if (addUnderscore) result.put("_" + matcher.group("variable"), matcher.group("value"));
+            else result.put(matcher.group("variable"), matcher.group("value"));
+        }
+        return result;
+    }
+
+    private String ProcessKeysValuePairsIntoJSONString(String KeyValues) throws Exception {
+        final ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(ProcessKeyValuePair(KeyValues, false));
+    }
 
     @Action(
             name = "Send Gelf Message",
@@ -50,88 +103,65 @@ public class GelfMessages {
             @Param("grayLogPort") int port,
             @Param("includeStats") boolean includeStats,
             @Param("priority") String priority,
-            @Param("flowName") String flowName
-    ) {
+            @Param("logAbove") String minimumPriority,
+            @Param("additionalProperties") String additionalProperties,
+            @Param("objectDetails") String objectDetails
+    ){
         Map<String, String> resultMap = new HashMap<String, String>();
-        try {
+
+        GelfMessageLevel messageLevel = GetDebugLevel(priority, GelfMessageLevel.ALERT);
+        GelfMessageLevel minimumLevel = GetDebugLevel(minimumPriority, GelfMessageLevel.INFO);
+        if (messageLevel.getNumericLevel() <= minimumLevel.getNumericLevel() ) {
+
+            //  try {
             final GelfConfiguration config = new GelfConfiguration(new InetSocketAddress(hostname, port))
                     .transport(GelfTransports.UDP).queueSize(512).connectTimeout(5000).reconnectDelay(1000)
                     .tcpNoDelay(true).sendBufferSize(32768);
 
-            GelfMessageLevel messageLevel;
-
-            if (priority.isEmpty()) {
-                messageLevel = GelfMessageLevel.ALERT;
-            } else {
-                try {
-                    Integer priorityLevel = Integer.parseInt(priority);
-                    messageLevel = GelfMessageLevel.fromNumericLevel(priorityLevel);
-                } catch (Exception e) {
-                    messageLevel = GelfMessageLevel.valueOf(priority);
-                }
-            }
 
             final GelfTransport transport = GelfTransports.create(config);
+            String hostName = "unknown";
+            try {
+                hostName = InetAddress.getLocalHost().getHostName();
+            } catch (UnknownHostException e) {}
 
-            final GelfMessageBuilder builder = new GelfMessageBuilder(message, InetAddress.getLocalHost().getHostName())
+            final GelfMessageBuilder builder = new GelfMessageBuilder(message, hostName)
                     .level(messageLevel)
                     .fullMessage(detail)
-                    .additionalField("_OO_flowName", flowName);
+                    .additionalFields(
+                        ProcessKeyValuePair(additionalProperties, true));
+
+            try {
+                builder.additionalField("_data", ProcessKeysValuePairsIntoJSONString(objectDetails));
+            } catch (Exception e) { }
+
+            builder.additionalField("_OO_uptime", java.lang.management.ManagementFactory.getRuntimeMXBean().getUptime());
+
+            if (includeStats) {
+                builder.additionalField("_OO_threads", java.lang.management.ManagementFactory.getThreadMXBean().getThreadCount());
+                try {
+                    builder.additionalField("_OO_resource", GetOOStats());
+                } catch (Exception e) {
+                }
+            }
 
             final GelfMessage gelfMessage = builder.build();
 
             boolean enqueued = transport.trySend(gelfMessage);
-        } catch (Exception e) {
-            resultMap.put("result_message", e.getMessage());
-        }
+            // } catch (Exception e) {
+            //     resultMap.put("result_message", e.getMessage());
+            //}
 
-        // The "result" output
-        resultMap.put(OutputNames.RETURN_RESULT, "done");
-
-        // The "result_message" output
-        resultMap.put("result_message", "This is a bad sum");
-
-        return resultMap;
-    }
-
-
-    /**
-     * This Action sums two numbers and results in success only if the sum is positive.
-     * The description "Adds two numbers" will be imported into the Description field when this action is imported into Studio.
-     * The action has two outputs - One containing the actual result, and the other a message.
-     * The action has two responses
-     *  Success - A success response. Will be chosen when the field "result" (From the return map) will be greater than or equal to "0"
-     *  Failure - An error response. Will be chosen when the field "result" (From the return map) will be less than "0"
-     *
-     * @param x The first number. @Param("op1") will make x's name in OO (Studio and central) be "op1"
-     * @param y The second number. @Param("op2") will make y's name in OO (Studio and central) be "op2"
-     */
-    @Action(name = "checkPositiveSum",
-            description = "Adds two numbers",
-            outputs = {
-                    @Output(OutputNames.RETURN_RESULT),
-                    @Output("result_message")
-            },
-            responses = {
-                    @Response(text = ResponseNames.SUCCESS, field = OutputNames.RETURN_RESULT, value = "0", matchType = MatchType.COMPARE_GREATER_OR_EQUAL, responseType = ResponseType.RESOLVED),
-                    @Response(text = ResponseNames.FAILURE, field = OutputNames.RETURN_RESULT, value = "0", matchType = MatchType.COMPARE_LESS, responseType = ResponseType.ERROR)
-            })
-    public Map<String, String> checkPositiveSum(@Param("op1") int x, @Param("op2") int y) {
-        Map<String, String> resultMap = new HashMap<String, String>();
-
-        //Calculate sum
-        int sum = x + y;
-
-        //The "result" output
-        resultMap.put(OutputNames.RETURN_RESULT, String.valueOf(sum));
-
-        //The "result_message" output
-        if (sum >= 0) {
-            resultMap.put("result_message", "This is a good sum");
+            // The "result" output
+            resultMap.put(OutputNames.RETURN_RESULT, "done");
+            resultMap.put("result_message", gelfMessage.toString());
         } else {
-            resultMap.put("result_message", "This is a bad sum");
+            resultMap.put("result_message", "Message level was not high enough.");
         }
+        // The "result_message" output
+
 
         return resultMap;
     }
+
 }
