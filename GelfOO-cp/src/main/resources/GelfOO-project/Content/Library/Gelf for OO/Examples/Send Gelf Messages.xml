@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flow id="f2ee6785-b181-45aa-85e0-6e432eda4515">
   <descriptionCdata><![CDATA[f2ee6785-b181-45aa-85e0-6e432eda4515.ae7c621f-f5fa-4856-8923-564471a69be6.description=Publishes a Gelf message via UDP.
+f2ee6785-b181-45aa-85e0-6e432eda4515.cf22eeba-9c9e-47aa-81bd-0f83b7756b2f.description=Publishes a Gelf message via UDP.
 ]]></descriptionCdata>
   <annotation></annotation>
   <name>Send Gelf Messages</name>
@@ -43,6 +44,162 @@
   <compatibleRuntimeContext>false</compatibleRuntimeContext>
   <historyCheckPointFlow>true</historyCheckPointFlow>
   <steps>
+    <step id="cf22eeba-9c9e-47aa-81bd-0f83b7756b2f">
+      <annotation>f2ee6785-b181-45aa-85e0-6e432eda4515.cf22eeba-9c9e-47aa-81bd-0f83b7756b2f.description</annotation>
+      <name>Send Gelf Message</name>
+      <bounds>
+        <x>210.0</x>
+        <y>150.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <iconSpec id="f14238e9-e2ce-49ac-a4d0-849bf08f1f64">
+        <baseIcon>webservice.png</baseIcon>
+        <basePath>System</basePath>
+        <readOnly>false</readOnly>
+        <layers/>
+      </iconSpec>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>true</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings>
+        <staticBinding id="a56a8ecb-85f5-457f-9dcd-91d9f43da99c">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>message</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>solo message!</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="69489a54-dd71-4427-b124-47ef1249c350">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>grayLogHost</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>dc2gsdhierm02.it.savvis.net</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="40d1629c-4317-416d-9122-4874d2d596fc">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>grayLogPort</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>12201</value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="18c4735f-c8f3-4f01-a859-b2fa13e8c581">
+          <annotation></annotation>
+          <name>done</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>done</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>ae7c621f-f5fa-4856-8923-564471a69be6</refId>
+          </destination>
+          <source>
+            <refId>cf22eeba-9c9e-47aa-81bd-0f83b7756b2f</refId>
+          </source>
+          <positions>
+            <point>
+              <x>260.0</x>
+              <y>184.0</y>
+            </point>
+            <point>
+              <x>410.0</x>
+              <y>184.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>97948f6d-bfb4-44e7-84dd-906408b32996</refId>
+      </opRef>
+      <assignments/>
+      <throttleSize>0</throttleSize>
+    </step>
+    <returnStep id="b825e657-be2a-414c-87df-c1922fb438d3">
+      <annotation></annotation>
+      <name>Resolved : success</name>
+      <bounds>
+        <x>570.0</x>
+        <y>150.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <iconSpec id="b0f7eb46-9e94-43b2-a4d5-1add8f77943c">
+        <baseIcon>return_success.png</baseIcon>
+        <basePath>System</basePath>
+        <readOnly>true</readOnly>
+        <layers/>
+      </iconSpec>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings/>
+      <transitions>
+        <transition id="d9933ccc-be12-43db-9114-3942a0b7ab14">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>b825e657-be2a-414c-87df-c1922fb438d3</refId>
+          </destination>
+          <source>
+            <refId>b825e657-be2a-414c-87df-c1922fb438d3</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>RESOLVED</returnStepType>
+      <assignments/>
+    </returnStep>
     <step id="ae7c621f-f5fa-4856-8923-564471a69be6">
       <annotation>f2ee6785-b181-45aa-85e0-6e432eda4515.ae7c621f-f5fa-4856-8923-564471a69be6.description</annotation>
       <name>Send Gelf Message</name>
@@ -266,56 +423,6 @@ test4=this is test 4</value>
       <assignments/>
       <throttleSize>0</throttleSize>
     </step>
-    <returnStep id="b825e657-be2a-414c-87df-c1922fb438d3">
-      <annotation></annotation>
-      <name>Resolved : success</name>
-      <bounds>
-        <x>570.0</x>
-        <y>150.0</y>
-      </bounds>
-      <layer>-1</layer>
-      <hideInbound>false</hideInbound>
-      <iconSpec id="b0f7eb46-9e94-43b2-a4d5-1add8f77943c">
-        <baseIcon>return_success.png</baseIcon>
-        <basePath>System</basePath>
-        <readOnly>true</readOnly>
-        <layers/>
-      </iconSpec>
-      <addResultToRunContext>false</addResultToRunContext>
-      <isCriticalStep>false</isCriticalStep>
-      <isNonBlocking>false</isNonBlocking>
-      <isParallelStep>false</isParallelStep>
-      <isSingleResponse>false</isSingleResponse>
-      <recordInHistory>false</recordInHistory>
-      <recordRawOutput>true</recordRawOutput>
-      <recordPrimaryOutput>true</recordPrimaryOutput>
-      <checkPointStep>true</checkPointStep>
-      <historyCheckPointStep>true</historyCheckPointStep>
-      <scriptResultStep>false</scriptResultStep>
-      <userPrompt></userPrompt>
-      <bindings/>
-      <transitions>
-        <transition id="d9933ccc-be12-43db-9114-3942a0b7ab14">
-          <annotation></annotation>
-          <name>return</name>
-          <command>NEXT</command>
-          <linkMode>false</linkMode>
-          <responseSymbol>success</responseSymbol>
-          <shouldHandoff>false</shouldHandoff>
-          <transitionValue>0.0</transitionValue>
-          <destination>
-            <refId>b825e657-be2a-414c-87df-c1922fb438d3</refId>
-          </destination>
-          <source>
-            <refId>b825e657-be2a-414c-87df-c1922fb438d3</refId>
-          </source>
-          <positions/>
-        </transition>
-      </transitions>
-      <properties/>
-      <returnStepType>RESOLVED</returnStepType>
-      <assignments/>
-    </returnStep>
     <returnStep id="de08221d-bbd1-4914-a14b-e6cd0d64f75c">
       <annotation></annotation>
       <name>Error : failure</name>
@@ -361,5 +468,5 @@ test4=this is test 4</value>
       <assignments/>
     </returnStep>
   </steps>
-  <startSteps>ae7c621f-f5fa-4856-8923-564471a69be6</startSteps>
+  <startSteps>cf22eeba-9c9e-47aa-81bd-0f83b7756b2f</startSteps>
 </flow>

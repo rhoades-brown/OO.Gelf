@@ -40,7 +40,7 @@ public class GelfMessages {
 
     private GelfMessageLevel GetDebugLevel(String level, GelfMessageLevel defaultLevel){
 
-        if (level.isEmpty()) {
+        if (level == null || level.isEmpty()) {
             return  defaultLevel;
         } else {
             try {
@@ -58,13 +58,14 @@ public class GelfMessages {
 
     private Map<String, Object> ProcessKeyValuePair(String strings, Boolean addUnderscore) {
         Map<String,Object> result = new HashMap<>();
-
-        for (String line : strings.split("\\r?\\n")) {
-            Pattern compile = Pattern.compile("^(?<variable>\\w+)=(?<value>.*)$");
-            Matcher matcher = compile.matcher(line);
-            matcher.find();
-            if (addUnderscore) result.put("_" + matcher.group("variable"), matcher.group("value"));
-            else result.put(matcher.group("variable"), matcher.group("value"));
+        if (strings != null && !strings.isEmpty()) {
+            for (String line : strings.split("\\r?\\n")) {
+                Pattern compile = Pattern.compile("^(?<variable>\\w+)=(?<value>.*)$");
+                Matcher matcher = compile.matcher(line);
+                matcher.find();
+                if (addUnderscore) result.put("_" + matcher.group("variable"), matcher.group("value"));
+                else result.put(matcher.group("variable"), matcher.group("value"));
+            }
         }
         return result;
     }
@@ -135,10 +136,14 @@ public class GelfMessages {
                 builder.additionalField("_data", ProcessKeysValuePairsIntoJSONString(objectDetails));
             } catch (Exception e) { }
 
-            builder.additionalField("_OO_uptime", java.lang.management.ManagementFactory.getRuntimeMXBean().getUptime());
 
             if (includeStats) {
-                builder.additionalField("_OO_threads", java.lang.management.ManagementFactory.getThreadMXBean().getThreadCount());
+                builder.additionalField(
+                        "_OO_uptime", java.lang.management.ManagementFactory.getRuntimeMXBean().getUptime()
+                    ).additionalField(
+                                "_OO_threads", java.lang.management.ManagementFactory.getThreadMXBean().getThreadCount()
+                    );
+
                 try {
                     builder.additionalField("_OO_resource", GetOOStats());
                 } catch (Exception e) {
