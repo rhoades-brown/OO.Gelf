@@ -4,11 +4,7 @@
 97948f6d-bfb4-44e7-84dd-906408b32996.29224a7c-d873-41b0-bbef-0197e215180c.prompt=Choose the priority of this message
 97948f6d-bfb4-44e7-84dd-906408b32996.44779c39-4b4a-4990-a2b4-d5265805e485.prompt=Please enter the short message here.
 97948f6d-bfb4-44e7-84dd-906408b32996.87cce3ee-1ee2-4b0f-b27e-8b773f7b82c5.prompt=Enter the GrayLog server name
-<<<<<<< HEAD
 97948f6d-bfb4-44e7-84dd-906408b32996.description=Publishes log messages in GELF format via UDP.\n\nInputs\:\n\tInputName\t\tRequired\tDetails\n\tmessage\t\ttrue\tA short descriptive message.\n\tdetail\t\tfalse\tA longer more detailed message.\n\tgrayLogHost\t\ttrue\tThe hostname of the GrayLog server/GELF receiever.\n\tgrayLogPort\t\ttrue\tThe portname of the GrayLog server/GELF receiever.\n\tincludeStats\t\tfalse\tIncludes detailed stats about the OO JAVA process (Default is FALSE)\n\tpriority\t\tfalse\tThe logging priority/level (uses SYSLOG levels) (Default is ALERT)\n\tadditionalProperties\tfalse\tkey/value pairs for additional properties to be added to the message body.\n\tobjectDetails\t\tfalse\tkey/value pairs for properties to be added to a 'data' property.\n\tlogAbove\t\tfalse\tThe minimum level to log.  This is useful for enabling debugging levels as needed (Default is ALERT)\n\nResponse\:\n\tResponse\tDetail\n\tsuccess\tThe creation of the message occurred and it was queued.  Because of the nature of UDP messages, this does not garuntee that it was recieved by the server/receiver.\n\tfailure\tSomething went wrong.\n\nResult\:\n\tThe basic details of the GELF message are returned in the result.  Not all of the properties are included.\n\nExample1\:\nThis is the most basic example.  It contains only a message.\n\tinputs\:\tmessage\t\ttrue\tThis is a simple test message.\n\t\tgrayLogHost\t\ttrue\tmyGrayLogServer.local\n\t\tgrayLogPort\t\ttrue\t12201\n\t\n\tResult\:\tGelfMessage{version\="1.1" timestamp\="1534435075.509" short_message\="solo message\!", level\="ALERT(1)"}\n\tResponse\:\tSuccess\n\nA GELF message is created\:\n\tdata\: {}\n\tlevel\: 1\n\tmessage\: This is a simple test message.\n\tseverity\: Alert (1) (decorated)\n\tsource\: myOOServer.local\n\ttimestamp\: 2018-08-16T15\:57\:55.509Z
-=======
-97948f6d-bfb4-44e7-84dd-906408b32996.description=Publishes a Gelf message via UDP.
->>>>>>> First working version.
 97948f6d-bfb4-44e7-84dd-906408b32996.fb835bde-317c-49f8-972f-320e99a68702.prompt=Please enter more detailed description of the issue here
 ]]></descriptionCdata>
   <annotation>97948f6d-bfb4-44e7-84dd-906408b32996.description</annotation>
@@ -209,21 +205,12 @@
   </possibleResponses>
   <availableResultExpressions/>
   <iconSpec id="c0b1e8bd-064e-4561-bc01-afa6e29aac54">
-<<<<<<< HEAD
     <baseIcon>mailbox.png</baseIcon>
     <basePath>/E-mail/</basePath>
     <readOnly>false</readOnly>
     <layers>
       <iconSpec id="953fb2c6-156c-4bc5-a536-144e63c63673">
         <baseIcon>send.png</baseIcon>
-=======
-    <baseIcon>index.png</baseIcon>
-    <basePath>/Others/</basePath>
-    <readOnly>false</readOnly>
-    <layers>
-      <iconSpec id="8fde92f1-a7af-40b1-abfa-368d6fcd1422">
-        <baseIcon>add.png</baseIcon>
->>>>>>> First working version.
         <basePath>/Annotations/</basePath>
         <readOnly>false</readOnly>
         <layers/>
