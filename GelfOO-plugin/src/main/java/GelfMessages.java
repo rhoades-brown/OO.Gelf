@@ -40,7 +40,11 @@ public class GelfMessages {
 
     private GelfMessageLevel GetDebugLevel(String level, GelfMessageLevel defaultLevel){
 
+<<<<<<< HEAD
         if (level == null || level.isEmpty()) {
+=======
+        if (level.isEmpty()) {
+>>>>>>> First working version.
             return  defaultLevel;
         } else {
             try {
@@ -58,6 +62,7 @@ public class GelfMessages {
 
     private Map<String, Object> ProcessKeyValuePair(String strings, Boolean addUnderscore) {
         Map<String,Object> result = new HashMap<>();
+<<<<<<< HEAD
         if (strings != null && !strings.isEmpty()) {
             for (String line : strings.split("\\r?\\n")) {
                 Pattern compile = Pattern.compile("^(?<variable>\\w+)=(?<value>.*)$");
@@ -66,6 +71,15 @@ public class GelfMessages {
                 if (addUnderscore) result.put("_" + matcher.group("variable"), matcher.group("value"));
                 else result.put(matcher.group("variable"), matcher.group("value"));
             }
+=======
+
+        for (String line : strings.split("\\r?\\n")) {
+            Pattern compile = Pattern.compile("^(?<variable>\\w+)=(?<value>.*)$");
+            Matcher matcher = compile.matcher(line);
+            matcher.find();
+            if (addUnderscore) result.put("_" + matcher.group("variable"), matcher.group("value"));
+            else result.put(matcher.group("variable"), matcher.group("value"));
+>>>>>>> First working version.
         }
         return result;
     }
@@ -131,6 +145,7 @@ public class GelfMessages {
                     .fullMessage(detail)
                     .additionalFields(
                         ProcessKeyValuePair(additionalProperties, true));
+<<<<<<< HEAD
 
             try {
                 builder.additionalField("_data", ProcessKeysValuePairsIntoJSONString(objectDetails));
@@ -144,6 +159,17 @@ public class GelfMessages {
                                 "_OO_threads", java.lang.management.ManagementFactory.getThreadMXBean().getThreadCount()
                     );
 
+=======
+
+            try {
+                builder.additionalField("_data", ProcessKeysValuePairsIntoJSONString(objectDetails));
+            } catch (Exception e) { }
+
+            builder.additionalField("_OO_uptime", java.lang.management.ManagementFactory.getRuntimeMXBean().getUptime());
+
+            if (includeStats) {
+                builder.additionalField("_OO_threads", java.lang.management.ManagementFactory.getThreadMXBean().getThreadCount());
+>>>>>>> First working version.
                 try {
                     builder.additionalField("_OO_resource", GetOOStats());
                 } catch (Exception e) {

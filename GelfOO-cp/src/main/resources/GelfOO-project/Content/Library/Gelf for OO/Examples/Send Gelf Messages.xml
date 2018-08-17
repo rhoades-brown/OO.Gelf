@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flow id="f2ee6785-b181-45aa-85e0-6e432eda4515">
   <descriptionCdata><![CDATA[f2ee6785-b181-45aa-85e0-6e432eda4515.ae7c621f-f5fa-4856-8923-564471a69be6.description=Publishes a Gelf message via UDP.
+<<<<<<< HEAD
 f2ee6785-b181-45aa-85e0-6e432eda4515.cf22eeba-9c9e-47aa-81bd-0f83b7756b2f.description=Publishes a Gelf message via UDP.
+=======
+>>>>>>> First working version.
 ]]></descriptionCdata>
   <annotation></annotation>
   <name>Send Gelf Messages</name>
@@ -44,6 +47,7 @@ f2ee6785-b181-45aa-85e0-6e432eda4515.cf22eeba-9c9e-47aa-81bd-0f83b7756b2f.descri
   <compatibleRuntimeContext>false</compatibleRuntimeContext>
   <historyCheckPointFlow>true</historyCheckPointFlow>
   <steps>
+<<<<<<< HEAD
     <step id="cf22eeba-9c9e-47aa-81bd-0f83b7756b2f">
       <annotation>f2ee6785-b181-45aa-85e0-6e432eda4515.cf22eeba-9c9e-47aa-81bd-0f83b7756b2f.description</annotation>
       <name>Send Gelf Message</name>
@@ -200,6 +204,8 @@ f2ee6785-b181-45aa-85e0-6e432eda4515.cf22eeba-9c9e-47aa-81bd-0f83b7756b2f.descri
       <returnStepType>RESOLVED</returnStepType>
       <assignments/>
     </returnStep>
+=======
+>>>>>>> First working version.
     <step id="ae7c621f-f5fa-4856-8923-564471a69be6">
       <annotation>f2ee6785-b181-45aa-85e0-6e432eda4515.ae7c621f-f5fa-4856-8923-564471a69be6.description</annotation>
       <name>Send Gelf Message</name>
@@ -423,6 +429,59 @@ test4=this is test 4</value>
       <assignments/>
       <throttleSize>0</throttleSize>
     </step>
+<<<<<<< HEAD
+=======
+    <returnStep id="b825e657-be2a-414c-87df-c1922fb438d3">
+      <annotation></annotation>
+      <name>Resolved : success</name>
+      <bounds>
+        <x>570.0</x>
+        <y>150.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <iconSpec id="b0f7eb46-9e94-43b2-a4d5-1add8f77943c">
+        <baseIcon>return_success.png</baseIcon>
+        <basePath>System</basePath>
+        <readOnly>true</readOnly>
+        <layers/>
+      </iconSpec>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings/>
+      <transitions>
+        <transition id="d9933ccc-be12-43db-9114-3942a0b7ab14">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>b825e657-be2a-414c-87df-c1922fb438d3</refId>
+          </destination>
+          <source>
+            <refId>b825e657-be2a-414c-87df-c1922fb438d3</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>RESOLVED</returnStepType>
+      <assignments/>
+    </returnStep>
+>>>>>>> First working version.
     <returnStep id="de08221d-bbd1-4914-a14b-e6cd0d64f75c">
       <annotation></annotation>
       <name>Error : failure</name>
@@ -468,5 +527,9 @@ test4=this is test 4</value>
       <assignments/>
     </returnStep>
   </steps>
+<<<<<<< HEAD
   <startSteps>cf22eeba-9c9e-47aa-81bd-0f83b7756b2f</startSteps>
+=======
+  <startSteps>ae7c621f-f5fa-4856-8923-564471a69be6</startSteps>
+>>>>>>> First working version.
 </flow>
