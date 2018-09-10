@@ -220,7 +220,7 @@
   <plugin>
     <groupId>com.rhoadesbrown.gelfOO</groupId>
     <artifactId>GelfOO-plugin</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.2</version>
     <actionName>Send Gelf Message</actionName>
   </plugin>
   <fieldValues/>

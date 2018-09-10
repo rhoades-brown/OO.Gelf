@@ -14,7 +14,8 @@ public class GelfPersistance {
 
     private GelfPersistance(String hostname, int port){
             config = new GelfConfiguration(new InetSocketAddress(hostname, port))
-                    .transport(GelfTransports.UDP).queueSize(512)
+                    .transport(GelfTransports.UDP)
+                    .queueSize(512)
                     .connectTimeout(5000)
                     .reconnectDelay(1000)
                     .tcpNoDelay(true)

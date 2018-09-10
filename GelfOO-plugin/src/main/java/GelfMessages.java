@@ -57,14 +57,15 @@ public class GelfMessages {
     }
 
     private Map<String, Object> ProcessKeyValuePair(String strings, Boolean addUnderscore) {
+        Pattern compile = Pattern.compile("^(?<variable>\\w+)=(?<value>.*)$");
         Map<String,Object> result = new HashMap<>();
         if (strings != null && !strings.isEmpty()) {
             for (String line : strings.split("\\r?\\n")) {
-                Pattern compile = Pattern.compile("^(?<variable>\\w+)=(?<value>.*)$");
                 Matcher matcher = compile.matcher(line);
-                matcher.find();
-                if (addUnderscore) result.put("_" + matcher.group("variable"), matcher.group("value"));
-                else result.put(matcher.group("variable"), matcher.group("value"));
+                if (matcher.find()) {
+                    if (addUnderscore) result.put("_" + matcher.group("variable"), matcher.group("value"));
+                    else result.put(matcher.group("variable"), matcher.group("value"));
+                }
             }
         }
         return result;
